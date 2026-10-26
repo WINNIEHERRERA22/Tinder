@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#071522" />
+<meta name="description" content="Agro Solar Conectt v2.0: plataforma integral de operaciones para proyectos, materiales y actividades de campo. Desarrollo progresivo." />
+<title>Agro Solar Conectt v2.0 | Plataforma integral de operaciones</title>
+<style>
+:root{--amber:#ffad4d;--red:#ff6b5c;--violet:#b58cff;
+  --bg:#06121e;--bg2:#091d2d;--panel:#0b2335;--panel2:#0d2b40;
+  --line:rgba(91,203,231,.22);--cyan:#42d8f2;--cyan2:#13a9d0;
+  --green:#9af36a;--white:#eef8ff;--muted:#a9c0cf;--orange:#ffb65c;
+  --shadow:0 24px 70px rgba(0,0,0,.35);--radius:18px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--green);outline-offset:4px}
+.container{width:min(1180px,calc(100% - 40px));margin:auto}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;color:var(--cyan);font-size:.72rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.eyebrow:before{content:"";width:23px;height:2px;background:var(--green);box-shadow:0 0 12px var(--green)}
+.section{padding:100px 0;position:relative}
+.section-heading{max-width:720px;margin-bottom:42px}
+.section-heading h2{font-size:clamp(2rem,4vw,3.35rem);line-height:1.06;letter-spacing:-.045em;margin:14px 0}
+.section-heading p{color:var(--muted);max-width:640px;margin:0;font-size:1.02rem}
+.gradient-text{background:linear-gradient(100deg,var(--white) 0%,var(--cyan) 55%,var(--green) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 19px;border-radius:999px;border:1px solid transparent;font-size:.88rem;font-weight:800;transition:transform .2s,box-shadow .2s,background .2s;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{color:#04131b;background:linear-gradient(110deg,var(--green),#5ee7bb);box-shadow:0 8px 28px rgba(120,240,144,.18)}
+.btn-primary:hover{box-shadow:0 12px 34px rgba(120,240,144,.3)}
+.btn-outline{border-color:rgba(132,222,243,.55);background:rgba(6,22,34,.5);color:var(--white)}
+.btn-outline:hover{background:rgba(66,216,242,.1)}
+
+/* HEADER */
+header{height:78px;position:sticky;top:0;z-index:50;background:rgba(5,17,28,.86);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;line-height:1.05;letter-spacing:-.03em}
+.brand-mark{width:39px;height:39px;border:1px solid rgba(154,243,106,.65);border-radius:13px;display:grid;place-items:center;color:var(--green);font-size:1.3rem;background:linear-gradient(145deg,rgba(154,243,106,.13),rgba(66,216,242,.08))}
+.brand small{display:block;color:var(--green);font-size:.65rem;letter-spacing:.12em;margin-top:5px}
+.nav-links{display:flex;align-items:center;gap:25px;font-size:.82rem;color:#c5d7e2}
+.nav-links a{transition:color .2s}
+.nav-links a:hover{color:var(--green)}
+.nav-actions{display:flex;align-items:center;gap:12px}
+.menu-toggle{display:none;width:42px;height:42px;border:1px solid var(--line);background:var(--panel);color:white;border-radius:12px;font-size:1.2rem}
+
+/* HERO */
+.hero{min-height:720px;display:flex;align-items:center;position:relative;overflow:hidden;border-bottom:1px solid var(--line);isolation:isolate}
+.hero:before{content:"";position:absolute;inset:0;z-index:-3;background:linear-gradient(90deg,rgba(3,14,24,.98) 0%,rgba(3,17,29,.85) 38%,rgba(3,17,29,.3) 78%,rgba(3,17,29,.55) 100%),url("https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=2200&q=85") center 54%/cover}
+.hero:after{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(0deg,var(--bg) 0%,transparent 23%),radial-gradient(circle at 76% 35%,rgba(24,180,220,.18),transparent 33%)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:35px;align-items:center;padding:78px 0 130px}
+.hero-copy{max-width:700px}
+.hero h1{font-size:clamp(2.8rem,6.2vw,5.2rem);line-height:.98;letter-spacing:-.06em;margin:20px 0 18px;max-width:800px}
+.hero-copy>p{max-width:590px;color:#c7d9e5;font-size:1.05rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.hero-note{display:flex;align-items:center;gap:12px;margin-top:30px;color:#bad0dd;font-size:.78rem}
+.pulse-dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 0 6px rgba(154,243,106,.12),0 0 18px var(--green);flex:0 0 8px}
+
+/* Selector de audiencia */
+.audience-switch{display:inline-flex;gap:4px;padding:4px;margin-bottom:22px;border:1px solid rgba(91,203,231,.35);border-radius:999px;background:rgba(3,13,22,.72);backdrop-filter:blur(10px)}
+.audience-btn{border:0;border-radius:999px;background:transparent;color:#c4d6e0;padding:9px 16px;font-size:.78rem;font-weight:800;cursor:pointer;transition:.2s}
+.audience-btn.active{background:var(--green);color:#06131d;box-shadow:0 5px 20px rgba(154,243,106,.15)}
+
+/* Badge de estado global */
+.status-note{display:inline-flex;align-items:center;gap:9px;margin:16px 0 4px;padding:7px 13px;border:1px solid rgba(255,173,77,.3);border-radius:999px;background:rgba(255,173,77,.06);color:#ffcf8a;font-size:.75rem;font-weight:700}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 5px rgba(255,173,77,.12);flex:0 0 7px}
+
+/* Hero console */
+.hero-console{border:1px solid rgba(66,216,242,.4);background:linear-gradient(145deg,rgba(7,28,44,.94),rgba(6,18,30,.83));border-radius:22px;padding:18px;box-shadow:var(--shadow);transform:perspective(1200px) rotateY(-5deg);animation:float 6s ease-in-out infinite}
+.console-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:16px;font-size:.75rem}
+.live{color:var(--green);font-size:.68rem;letter-spacing:.12em}
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.metric{padding:14px;background:rgba(17,54,77,.65);border:1px solid rgba(66,216,242,.15);border-radius:12px}
+.metric span{display:block;color:#a9c0cf;font-size:.7rem}
+.metric strong{font-size:1.7rem;letter-spacing:-.04em;display:block;margin:4px 0}
+.metric small{color:var(--green);font-size:.7rem}
+.console-chart{margin-top:12px;padding:15px;background:rgba(3,15,26,.65);border:1px solid var(--line);border-radius:12px}
+.chart-head{display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:15px}
+.bars{height:75px;display:flex;align-items:end;gap:8px}
+.bars i{display:block;flex:1;border-radius:5px 5px 0 0;background:linear-gradient(0deg,var(--cyan2),var(--green));opacity:.88;animation:barPulse 3s ease-in-out infinite alternate}
+.bars i:nth-child(1){height:38%}.bars i:nth-child(2){height:65%;animation-delay:.2s}.bars i:nth-child(3){height:48%;animation-delay:.4s}.bars i:nth-child(4){height:84%;animation-delay:.6s}.bars i:nth-child(5){height:60%;animation-delay:.8s}.bars i:nth-child(6){height:96%;animation-delay:1s}.bars i:nth-child(7){height:72%;animation-delay:1.2s}
+
+/* Pilares inferiores */
+.hero-bottom{position:absolute;bottom:0;left:0;right:0;background:rgba(4,18,29,.86);border-top:1px solid var(--line);backdrop-filter:blur(12px)}
+.pillars{display:grid;grid-template-columns:repeat(5,1fr)}
+.pillar{display:flex;align-items:center;gap:12px;padding:20px 14px;border-right:1px solid var(--line);font-size:.77rem;color:#d5e5ed}
+.pillar:last-child{border:0}
+.pillar-icon{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--cyan);border:1px solid rgba(66,216,242,.35);background:rgba(66,216,242,.08);font-size:1.1rem}
+.pillar strong{display:block;color:white;font-size:.8rem}
+
+/* RETO */
+.challenge{background:linear-gradient(120deg,#eef7fb 0%,#d9edf4 100%);color:#092033}
+.challenge .section-heading p{color:#496576}
+.challenge .eyebrow{color:#087f9f}
+.challenge-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:55px;align-items:center}
+.challenge .section-heading{margin-bottom:25px}
+.challenge-points{display:grid;gap:15px;margin:26px 0 30px}
+.challenge-point{display:flex;gap:12px;align-items:flex-start;font-size:.88rem;color:#234356}
+.check-icon{display:grid;place-items:center;flex:0 0 27px;height:27px;border-radius:9px;background:#d3f5e5;color:#167d60;font-weight:900}
+.challenge-quote{background:#08283b;color:#eaf7ff;padding:32px 30px;border-radius:20px;box-shadow:0 24px 55px rgba(3,24,39,.25);border:1px solid #1d6680}
+.challenge-quote .eyebrow{color:var(--green)}
+.challenge-quote h3{font-size:1.6rem;line-height:1.2;margin:14px 0 16px;letter-spacing:-.03em;color:#fff}
+.challenge-quote p{color:#b8cfdb;font-size:.92rem;margin:0 0 16px}
+.challenge-quote ul{list-style:none;padding:0;margin:0;font-size:.85rem;color:#d5e5ed}
+.challenge-quote li{padding:8px 0 8px 26px;position:relative;border-top:1px solid rgba(91,203,231,.15)}
+.challenge-quote li:first-child{border-top:0;padding-top:0}
+.challenge-quote li:before{content:"→";position:absolute;left:0;color:var(--green);font-weight:900}
+
+/* Badges de estado */
+.module-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:.64rem;font-weight:800;letter-spacing:.05em;margin-bottom:14px;text-transform:uppercase}
+.module-badge:before{content:"";width:6px;height:6px;border-radius:50%}
+.module-badge.partial{color:#9af36a;background:rgba(154,243,106,.1);border:1px solid rgba(154,243,106,.3)}
+.module-badge.partial:before{background:#9af36a}
+.module-badge.wip{color:#ffad4d;background:rgba(255,173,77,.1);border:1px solid rgba(255,173,77,.3)}
+.module-badge.wip:before{background:#ffad4d}
+.module-badge.roadmap{color:#b58cff;background:rgba(181,140,255,.1);border:1px solid rgba(181,140,255,.3)}
+.module-badge.roadmap:before{background:#b58cff}
+
+/* MÓDULOS */
+.modules{background:linear-gradient(180deg,#071522,#091e2d)}
+.modules-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+.module-card{min-height:290px;padding:20px 17px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(155deg,rgba(15,49,70,.88),rgba(7,23,36,.9));position:relative;overflow:hidden;transition:transform .25s,border-color .25s,background .25s;display:flex;flex-direction:column}
+.module-card:before{content:"";position:absolute;width:100px;height:100px;right:-45px;top:-45px;border-radius:50%;background:var(--accent);opacity:.1;filter:blur(2px)}
+.module-card:hover{transform:translateY(-7px);border-color:var(--accent);background:linear-gradient(155deg,rgba(17,60,82,.95),rgba(7,23,36,.96))}
+.module-icon{width:46px;height:46px;display:grid;place-items:center;border-radius:13px;border:1px solid color-mix(in srgb,var(--accent),transparent 45%);background:color-mix(in srgb,var(--accent),transparent 88%);color:var(--accent);font-size:1.35rem;margin:12px 0 16px}
+.module-card h3{font-size:1rem;margin:0 0 9px}
+.module-card p{font-size:.79rem;color:#b0c6d3;margin:0 0 17px;flex:1}
+.module-card button{border:0;background:none;padding:0;color:var(--accent);font-size:.75rem;font-weight:800;align-self:flex-start;margin-top:auto}
+.module-extra{display:none;color:#d9e9f0;font-size:.75rem;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
+.module-card.expanded .module-extra{display:block}
+
+/* DEMO */
+.live-demo{background:radial-gradient(circle at 78% 20%,rgba(19,169,208,.13),transparent 33%),#06121e}
+.demo-note{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:999px;background:rgba(255,173,77,.08);border:1px solid rgba(255,173,77,.3);color:#ffcf8a;font-size:.73rem;font-weight:700;margin-bottom:18px}
+.demo-note:before{content:"⚠";font-size:.9rem}
+.ops-shell{display:grid;grid-template-columns:230px 1fr;border:1px solid rgba(66,216,242,.3);border-radius:20px;overflow:hidden;background:#071724;box-shadow:0 30px 80px rgba(0,0,0,.38)}
+.ops-sidebar{padding:18px 12px;background:#06121c;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:7px}
+.ops-brand{display:flex;align-items:center;gap:10px;padding:8px 6px 22px;border-bottom:1px solid var(--line);margin-bottom:9px}
+.ops-brand>span{width:35px;height:35px;display:grid;place-items:center;border:1px solid var(--green);color:var(--green);border-radius:11px;font-size:1.4rem}
+.ops-brand b{display:block;font-size:.7rem;letter-spacing:.04em}.ops-brand small{display:block;color:#86a7b8;font-size:.57rem;margin-top:3px}
+.ops-nav{display:flex;align-items:center;gap:10px;text-align:left;padding:12px 11px;border:1px solid transparent;border-radius:10px;background:transparent;color:#aac1cf;font-size:.82rem;cursor:pointer}
+.ops-nav:hover,.ops-nav.active{background:rgba(66,216,242,.1);border-color:rgba(66,216,242,.22);color:#f1fbff}
+.ops-nav.active{box-shadow:inset 3px 0 var(--green)}
+.ops-sidebar-foot{margin-top:auto;padding:20px 6px 4px;display:flex;align-items:center;gap:10px;color:#83a2b3;font-size:.68rem}
+.ops-sidebar-foot .pulse-dot{width:6px;height:6px}
+.ops-main{padding:22px;min-width:0}
+.ops-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+.ops-kicker{color:var(--cyan);font-size:.62rem;letter-spacing:.14em;font-weight:800}
+.ops-head h3{font-size:1.45rem;margin:5px 0 0}
+.ops-badge{border:1px solid rgba(255,173,77,.35);color:#ffcf8a;background:rgba(255,173,77,.08);border-radius:999px;padding:7px 10px;font-size:.59rem;white-space:nowrap}
+.ops-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ops-kpis>div{padding:14px;background:#0a2334;border:1px solid rgba(66,216,242,.16);border-radius:12px;min-width:0}
+.ops-kpis small{display:block;color:#9bb5c4;font-size:.68rem}.ops-kpis strong{display:block;font-size:1.8rem;letter-spacing:-.05em;margin:5px 0}.ops-kpis span{font-size:.62rem;color:#83a7b8}.ops-kpis .kpi-green{color:var(--green)}.ops-kpis .alert-kpi strong{color:var(--amber)}
+.ops-content{display:grid;grid-template-columns:1.05fr .95fr;gap:11px;margin-top:12px}
+.ops-widget{padding:15px;background:#091f2e;border:1px solid rgba(66,216,242,.16);border-radius:12px;min-width:0}
+.widget-head{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.78rem;margin-bottom:15px}.widget-head span{color:var(--cyan);font-size:.62rem}
+.project-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(91,203,231,.1)}.project-row:last-child{border:0}
+.project-symbol{flex:0 0 34px;height:34px;display:grid;place-items:center;background:rgba(66,216,242,.12);border:1px solid rgba(66,216,242,.2);border-radius:10px;color:var(--cyan);font-size:.66rem;font-weight:900}
+.project-symbol.orange{color:var(--amber);background:rgba(255,173,77,.1)}.project-symbol.violet{color:var(--violet);background:rgba(181,140,255,.1)}
+.project-meta{flex:1;min-width:0}.project-meta b{display:block;font-size:.75rem}.project-meta small{display:block;color:#88a6b7;font-size:.63rem}.project-row>strong{font-size:.76rem;color:var(--green)}
+.ops-progress{height:4px;background:#16394a;border-radius:99px;margin-top:8px;overflow:hidden}.ops-progress i{height:100%;display:block;background:linear-gradient(90deg,var(--cyan),var(--green));border-radius:99px}
+.ops-chart{height:130px;display:flex;align-items:end;gap:8px;padding:7px 4px 0;border-bottom:1px solid rgba(91,203,231,.18);background:repeating-linear-gradient(to bottom,transparent 0 31px,rgba(91,203,231,.08) 32px 33px)}.ops-chart div{flex:1;min-width:5px;border-radius:5px 5px 0 0;background:linear-gradient(0deg,#0e8db3,var(--green));opacity:.88}
+.chart-labels{display:flex;justify-content:space-between;color:#7393a5;font-size:.6rem;margin-top:7px}.ops-footnote{font-size:.62rem;color:#6f91a3;margin-top:13px}
+.ops-map-widget{margin-top:11px}.ops-map{height:175px;position:relative;overflow:hidden;border:1px solid rgba(66,216,242,.12);border-radius:9px;background-color:#0c2938;background-image:linear-gradient(33deg,transparent 48%,rgba(66,216,242,.13) 49%,rgba(66,216,242,.13) 50%,transparent 51%),linear-gradient(145deg,transparent 40%,rgba(154,243,106,.11) 41%,rgba(154,243,106,.11) 42%,transparent 43%),linear-gradient(90deg,rgba(66,216,242,.05) 1px,transparent 1px),linear-gradient(rgba(66,216,242,.05) 1px,transparent 1px);background-size:auto,auto,26px 26px,26px 26px}
+.map-road{position:absolute;height:2px;background:rgba(255,173,77,.45);width:130%;left:-10%;top:53%;transform:rotate(-18deg)}.road-b{background:rgba(66,216,242,.4);top:38%;transform:rotate(21deg)}
+.map-pin{position:absolute;width:34px;height:34px;border-radius:11px;border:1px solid var(--green);background:#092334;color:var(--green);font-size:.62rem;font-weight:900;cursor:pointer;box-shadow:0 0 0 5px rgba(154,243,106,.08);transition:.2s}.map-pin:hover,.map-pin.selected{transform:translateY(-4px);background:var(--green);color:#06131d}.pin-a{left:23%;top:26%}.pin-b{left:58%;top:48%;border-color:var(--amber);color:var(--amber)}.pin-c{left:78%;top:20%;border-color:var(--violet);color:var(--violet)}
+.map-legend{position:absolute;bottom:9px;left:11px;color:#91afbf;font-size:.61rem}
+.ops-disclaimer{color:#7897a8;font-size:.72rem;margin-top:13px}
+.ops-table{width:100%;border-collapse:collapse;font-size:.75rem}.ops-table th,.ops-table td{text-align:left;padding:12px 8px;border-bottom:1px solid rgba(91,203,231,.12)}.ops-table th{color:#83a7b8;font-size:.63rem;text-transform:uppercase;letter-spacing:.08em}.ops-table td{color:#dceaf1}.ops-status{color:var(--green);font-size:.65rem}.ops-action{border:1px solid rgba(66,216,242,.45);background:rgba(66,216,242,.08);color:var(--cyan);border-radius:7px;padding:7px 9px;font-size:.66rem;cursor:pointer}.ops-action:disabled{opacity:.4;cursor:not-allowed}.ops-materials{grid-column:1/-1}.ops-empty{color:#92afbd;font-size:.8rem;line-height:1.7;padding:10px 0}
+
+/* TRAZABILIDAD */
+.trace{background:#eaf4f7;color:#082034}
+.trace .section-heading p{color:#536e7c}
+.trace-grid{display:grid;grid-template-columns:.72fr 1.28fr;gap:50px;align-items:center}
+.trace .eyebrow{color:#087f9f}
+.trace-intro p{color:#536e7c}
+.workflow{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;position:relative}
+.workflow:before{content:"";position:absolute;top:27px;left:8%;right:8%;height:2px;background:linear-gradient(90deg,#0d91bd,#4dd6bd,#5cbd6b);z-index:0}
+.step{position:relative;z-index:1;text-align:center;min-width:0}
+.step-button{width:56px;height:56px;border-radius:18px;border:1px solid #a6d4df;background:#fff;color:#087f9f;box-shadow:0 7px 18px rgba(5,46,66,.08);font-size:1.25rem;transition:.2s}
+.step-button:hover,.step-button.active{background:#08283b;color:var(--green);border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 10px 25px rgba(19,169,208,.2)}
+.step strong{display:block;margin:12px 0 4px;font-size:.76rem}
+.step small{display:block;color:#66808d;font-size:.66rem;line-height:1.35}
+.step-detail{grid-column:1/-1;margin-top:22px;background:white;border:1px solid #d2e6ec;border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:15px;box-shadow:0 12px 25px rgba(5,46,66,.05)}
+.step-detail-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:#d8f6e5;color:#087f63;font-size:1.1rem;flex:0 0 42px}
+.step-detail strong{display:block}
+.step-detail p{margin:3px 0 0;color:#5d7785;font-size:.8rem}
+
+/* PROFUNDIZAR (tab valor/arquitectura) */
+.profundizar{background:#081b2a}
+.profile-tabs{display:inline-flex;gap:4px;padding:4px;margin-bottom:32px;border:1px solid rgba(91,203,231,.3);border-radius:999px;background:rgba(3,13,22,.6)}
+.profile-tab{border:0;border-radius:999px;background:transparent;color:#c4d6e0;padding:10px 18px;font-size:.82rem;font-weight:800;cursor:pointer;transition:.2s}
+.profile-tab.active{background:var(--cyan);color:#04131b}
+.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.value-card{padding:20px 18px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(145deg,rgba(13,44,63,.85),rgba(7,23,36,.92));min-height:245px;transition:.25s}
+.value-card:hover{transform:translateY(-6px);border-color:var(--cyan)}
+.value-num{font-size:.61rem;letter-spacing:.13em;color:#84a8ba;font-weight:800}
+.value-icon{margin:23px 0 18px;width:43px;height:43px;display:grid;place-items:center;border-radius:12px;color:var(--cyan);background:rgba(66,216,242,.1);font-size:1.2rem}
+.value-icon.amber{color:var(--amber);background:rgba(255,173,77,.1)}.value-icon.violet{color:var(--violet);background:rgba(181,140,255,.1)}.value-icon.green{color:var(--green);background:rgba(154,243,106,.1)}
+.value-card h3{font-size:1rem;margin-bottom:10px}.value-card p{font-size:.78rem;color:#a9c0cf;margin:0}
+.architecture-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:55px;align-items:center}
+.architecture-note{font-size:.75rem!important;color:#829eae!important;border-left:2px solid var(--amber);padding-left:13px;margin-top:20px}
+.architecture-stack{display:grid;gap:9px}
+.stack-item{display:flex;align-items:center;gap:13px;padding:14px;background:#0a2030;border:1px solid var(--line);border-radius:12px}
+.stack-icon{flex:0 0 42px;height:42px;display:grid;place-items:center;border-radius:11px;background:rgba(66,216,242,.1);color:var(--cyan);font-size:1.2rem}
+.stack-icon.green{color:var(--green);background:rgba(154,243,106,.1)}.stack-icon.amber{color:var(--amber);background:rgba(255,173,77,.1)}.stack-icon.violet{color:var(--violet);background:rgba(181,140,255,.1)}
+.stack-item>div{flex:1}.stack-item b{font-size:.85rem}.stack-item p{margin:3px 0 0;color:#8eabba;font-size:.72rem}
+.stack-tag{font-size:.55rem;color:#8ba7b6;letter-spacing:.08em;border:1px solid rgba(91,203,231,.15);border-radius:999px;padding:5px 7px;white-space:nowrap}
+.stack-tag.partial{color:#9af36a;border-color:rgba(154,243,106,.3)}
+.stack-tag.wip{color:#ffad4d;border-color:rgba(255,173,77,.3)}
+.stack-tag.roadmap{color:#b58cff;border-color:rgba(181,140,255,.3)}
+
+/* PLATAFORMA (laptop tabs) */
+.platform{background:radial-gradient(circle at 70% 40%,rgba(18,113,148,.14),transparent 35%),var(--bg)}
+.platform-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:55px;align-items:center}
+.platform-copy p{color:var(--muted)}
+.tab-list{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0 16px}
+.tab-btn{border:1px solid var(--line);background:#0a2030;color:#bcd0dd;padding:10px 13px;border-radius:10px;font-size:.78rem;font-weight:750;transition:.2s}
+.tab-btn.active,.tab-btn:hover{border-color:var(--cyan);color:var(--white);background:rgba(66,216,242,.12);box-shadow:inset 0 0 0 1px rgba(66,216,242,.08)}
+.tab-panel{min-height:100px;border-left:2px solid var(--green);padding:4px 0 4px 17px}
+.tab-panel h3{margin:0 0 7px;font-size:1.1rem}
+.tab-panel p{margin:0;color:var(--muted);font-size:.88rem}
+.platform-visual{position:relative;padding:22px 0}
+.laptop{background:#07121d;border:1px solid #32758c;padding:13px;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.4);transform:rotateY(-4deg)}
+.laptop-screen{min-height:330px;background:linear-gradient(135deg,#0c2b40,#071925);border-radius:9px;padding:15px}
+.laptop-title{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;border-bottom:1px solid var(--line);padding-bottom:12px}
+.laptop-content{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px}
+.laptop-card{padding:13px;border-radius:10px;border:1px solid rgba(66,216,242,.16);background:rgba(12,48,68,.7);min-height:100px}
+.laptop-card h4{margin:0 0 10px;font-size:.72rem;color:#c3dce8}
+.laptop-card strong{font-size:1.5rem}
+.laptop-card p{margin:4px 0;color:var(--green);font-size:.68rem}
+.laptop-wide{grid-column:1/-1;display:flex;gap:15px;align-items:center}
+.laptop-wide .bars{flex:1;height:45px}
+.laptop-base{height:10px;width:110%;margin-left:-5%;background:linear-gradient(#9cb5c2,#2a5367);border-radius:0 0 14px 14px}
+
+/* CIERRE */
+.cta-band{padding:80px 0;background:linear-gradient(90deg,rgba(4,17,28,.94),rgba(4,17,28,.75)),url("https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?auto=format&fit=crop&w=1800&q=80") center/cover;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cta-inner{display:flex;align-items:center;justify-content:space-between;gap:35px}
+.cta-inner h2{font-size:clamp(2rem,4vw,3.1rem);line-height:1.06;letter-spacing:-.04em;margin:12px 0}
+.cta-inner p{max-width:620px;color:#bfd1dc;margin:0}
+.cta-actions{display:flex;flex-direction:column;align-items:flex-start;gap:12px;min-width:max-content}
+
+/* FOOTER */
+footer{padding:27px 0;background:#040d15;border-top:1px solid var(--line);color:#8ea8b8;font-size:.77rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:25px;flex-wrap:wrap}
+.footer-links{display:flex;gap:18px;flex-wrap:wrap}
+.footer-links a:hover{color:var(--green)}
+.footer-status{display:flex;align-items:center;gap:8px;color:#ffcf8a;font-size:.72rem;font-weight:700}
+.footer-status .status-dot{width:6px;height:6px}
+
+/* MODAL + TOAST */
+.modal-backdrop{position:fixed;inset:0;z-index:100;background:rgba(1,8,14,.78);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(520px,100%);background:#0a2030;border:1px solid rgba(66,216,242,.35);border-radius:20px;padding:28px;box-shadow:var(--shadow);position:relative;max-height:90vh;overflow-y:auto}
+.modal h2{margin:0 0 8px;font-size:1.7rem}
+.modal p{color:var(--muted);font-size:.9rem;margin:0 0 20px}
+.modal-close{position:absolute;right:16px;top:16px;border:1px solid var(--line);background:#102b3c;color:white;width:35px;height:35px;border-radius:10px;font-size:1.2rem}
+.form-row{display:grid;gap:6px;margin:14px 0}
+.form-row label{font-size:.78rem;color:#c6dce7;font-weight:700}
+.form-row input,.form-row select,.form-row textarea{width:100%;padding:12px 13px;border-radius:10px;border:1px solid rgba(91,203,231,.25);background:#061522;color:white;font:inherit;font-size:.88rem}
+.form-row textarea{resize:vertical;min-height:80px}
+.form-note{font-size:.72rem;color:#8ca9b9;margin-top:10px}
+.toast{position:fixed;right:22px;bottom:22px;z-index:120;max-width:360px;padding:15px 18px;background:#123b32;border:1px solid #5cc99d;border-radius:13px;color:#e8fff4;box-shadow:var(--shadow);display:none}
+.toast.show{display:block;animation:fadeUp .3s ease}
+
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@keyframes float{0%,100%{transform:perspective(1200px) rotateY(-5deg) translateY(0)}50%{transform:perspective(1200px) rotateY(-5deg) translateY(-8px)}}
+@keyframes barPulse{from{filter:saturate(.7);opacity:.65}to{filter:saturate(1.3);opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:1000px){
+ .nav-links{gap:14px}.hero-grid{grid-template-columns:1fr .85fr}.hero-console{padding:13px}
+ .pillars{grid-template-columns:repeat(3,1fr)}.pillar:nth-child(3){border-right:0}.pillar:nth-child(n+4){display:none}
+ .modules-grid{grid-template-columns:repeat(3,1fr)}.module-card{min-height:250px}
+ .challenge-grid,.platform-grid,.trace-grid,.architecture-grid{gap:30px}
+ .value-grid{grid-template-columns:repeat(2,1fr)}
+ .ops-shell{grid-template-columns:190px 1fr}.ops-main{padding:16px}.ops-kpis{grid-template-columns:repeat(2,1fr)}.ops-content{grid-template-columns:1fr}.ops-map-widget{margin-top:10px}
+ .architecture-grid{grid-template-columns:1fr}
+}
+@media(max-width:760px){
+ .container{width:min(100% - 30px,600px)}header{height:70px}.nav-actions>.btn{display:none}.menu-toggle{display:block}
+ .nav-links{display:none;position:absolute;top:69px;left:0;right:0;padding:18px 22px 22px;background:rgba(5,17,28,.98);border-bottom:1px solid var(--line);flex-direction:column;align-items:stretch;gap:0}
+ .nav-links.open{display:flex}.nav-links a{padding:12px 4px;border-bottom:1px solid rgba(91,203,231,.12)}
+ .hero{min-height:auto}.hero-grid{grid-template-columns:1fr;padding:70px 0 170px;gap:32px}.hero h1{font-size:clamp(2.6rem,11vw,4rem)}.hero-console{transform:none;animation:none;max-width:500px}
+ .hero-bottom{position:absolute}.pillars{grid-template-columns:repeat(2,1fr)}.pillar{padding:13px 7px;border-right:0}.pillar:nth-child(3){display:none}.pillar-icon{flex-basis:32px;height:32px}.pillar strong{font-size:.73rem}
+ .section{padding:70px 0}.challenge-grid,.platform-grid,.trace-grid,.architecture-grid{grid-template-columns:1fr}.challenge-grid{gap:35px}
+ .platform-grid{gap:25px}.platform-visual{padding:0}.laptop-screen{min-height:280px;padding:10px}.laptop-content{gap:7px}.laptop-card{padding:9px;min-height:90px}
+ .trace-grid{gap:30px}.workflow{gap:4px}.step-button{width:43px;height:43px;border-radius:13px;font-size:1rem}.workflow:before{top:21px}.step strong{font-size:.66rem}.step small{font-size:.59rem}.step-detail{align-items:flex-start}
+ .modules-grid{grid-template-columns:repeat(2,1fr)}.module-card{padding:17px 14px;min-height:260px}.module-card h3{font-size:.92rem}
+ .value-grid{grid-template-columns:1fr 1fr}
+ .cta-inner{align-items:flex-start;flex-direction:column}.cta-actions{min-width:0;flex-direction:row;flex-wrap:wrap}
+ .footer-inner{align-items:flex-start;flex-direction:column}.footer-links{gap:13px}
+ .ops-shell{grid-template-columns:1fr}.ops-sidebar{border-right:0;border-bottom:1px solid var(--line);padding:12px;display:grid;grid-template-columns:repeat(2,1fr)}.ops-brand{grid-column:1/-1;padding-bottom:12px}.ops-sidebar-foot{display:none}.ops-nav{font-size:.72rem;padding:10px 8px}.ops-main{padding:13px}.ops-head{align-items:flex-start;flex-direction:column}
+ .audience-switch{flex-wrap:wrap}.audience-btn{font-size:.72rem;padding:8px 12px}
+ .stack-tag{display:none}
+}
+@media(max-width:420px){
+ .hero h1{font-size:2.5rem}.metrics{gap:7px}.metric{padding:10px}.metric strong{font-size:1.4rem}
+ .pillars{grid-template-columns:1fr 1fr}.pillar{font-size:.67rem;gap:7px}.pillar-icon{flex-basis:29px;height:29px}
+ .workflow{grid-template-columns:repeat(5,minmax(0,1fr))}.step-button{width:37px;height:37px;border-radius:11px}.workflow:before{top:18px}.step strong{font-size:.6rem}.step small{display:none}
+ .step-detail{padding:13px}.modules-grid{grid-template-columns:1fr}.module-card{min-height:0}.module-icon{margin-bottom:14px}
+ .value-grid{grid-template-columns:1fr}.value-card{min-height:0}
+ .ops-kpis small{font-size:.61rem}.ops-kpis span{font-size:.57rem}.ops-badge{font-size:.53rem}.ops-table{font-size:.65rem}.ops-table th,.ops-table td{padding:9px 4px}
+ .audience-btn{flex:1}.stack-item{padding:11px}.stack-item p{font-size:.65rem}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#inicio" aria-label="Agro Solar Conectt, inicio">
+      <span class="brand-mark">⌁</span><span>Agro Solar<br>Conectt <small>v2.0 · PLATAFORMA INTEGRAL</small></span>
+    </a>
+    <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+      <a href="#solucion">El reto</a><a href="#modulos">Módulos</a><a href="#demo-panel">Demo</a><a href="#trazabilidad">Trazabilidad</a><a href="#profundizar">Profundizar</a><a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn btn-primary" data-open-demo>Solicitar presentación <span>↗</span></button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- 01 · HERO -->
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="audience-switch" role="group" aria-label="Personalizar presentación">
+        <button class="audience-btn active" id="audBusiness" aria-pressed="true">Empresa</button>
+        <button class="audience-btn" id="audTechnical" aria-pressed="false">Ingeniería y tecnología</button>
+      </div>
+      <span class="eyebrow">Plataforma integral de operaciones</span>
+      <h1>Cada proyecto conectado.<br><span class="gradient-text">Cada recurso con seguimiento.</span></h1>
+      <p id="heroDescription">Agro Solar Conectt v2.0 centraliza la información de proyectos, materiales y actividades de campo en un entorno digital modular, para dar a las empresas una visión más clara de su operación.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#demo-panel">Explorar la demostración <span>→</span></a>
+        <a class="btn btn-outline" href="#solucion"><span>▷</span> Conocer el reto</a>
+      </div>
+      <div class="status-note"><span class="status-dot"></span> Plataforma en desarrollo progresivo · Funciones parciales, en desarrollo y en hoja de ruta</div>
+      <div class="hero-note"><span class="pulse-dot"></span> Tecnología para conectar oficina, campo y decisiones.</div>
+    </div>
+    <div class="hero-console" aria-label="Vista demostrativa de indicadores de la plataforma">
+      <div class="console-top"><strong>AGRO SOLAR CONECTT <span style="color:var(--green)">/ PANEL OPERATIVO</span></strong><span class="live">● DEMO</span></div>
+      <div class="metrics">
+        <div class="metric"><span>Proyectos activos</span><strong data-count="12">0</strong><small>Seguimiento centralizado</small></div>
+        <div class="metric"><span>Materiales en campo</span><strong data-count="248">0</strong><small>Trazabilidad de recursos</small></div>
+        <div class="metric"><span>Usuarios de demostración</span><strong data-count="36">0</strong><small>Roles y permisos</small></div>
+        <div class="metric"><span>Alertas de ejemplo</span><strong data-count="3">0</strong><small>Atención priorizada</small></div>
+      </div>
+      <div class="console-chart">
+        <div class="chart-head"><strong>Actividad operativa</strong><span style="color:var(--cyan)">Datos ilustrativos</span></div>
+        <div class="bars" aria-label="Gráfica ilustrativa de actividad"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom"><div class="container pillars">
+    <div class="pillar"><span class="pillar-icon">⌖</span><span><strong>Proyectos</strong>Avances y responsables</span></div>
+    <div class="pillar"><span class="pillar-icon">⬡</span><span><strong>Materiales</strong>Movimientos y stock</span></div>
+    <div class="pillar"><span class="pillar-icon">♙</span><span><strong>Usuarios</strong>Roles y permisos</span></div>
+    <div class="pillar"><span class="pillar-icon">▥</span><span><strong>Reportes</strong>Información para decidir</span></div>
+    <div class="pillar"><span class="pillar-icon">▣</span><span><strong>Acceso móvil</strong>Información en campo</span></div>
+  </div></div>
+</section>
+
+<!-- 02 · EL RETO -->
+<section class="section challenge" id="solucion">
+  <div class="container challenge-grid">
+    <div class="reveal">
+      <div class="section-heading">
+        <span class="eyebrow">El desafío operativo</span>
+        <h2>Cuando la información está dispersa, <span style="color:#0789a9">cuesta mantener una visión común.</span></h2>
+        <p>Proyectos, inventario y actividades gestionados en fuentes separadas dificultan la trazabilidad y la toma de decisiones con contexto. Agro Solar Conectt v2.0 busca abordar ese desafío desde un entorno centralizado.</p>
+      </div>
+      <div class="challenge-points">
+        <div class="challenge-point"><span class="check-icon">✓</span><span><strong>Visibilidad centralizada</strong><br>Consulta la información operativa desde un entorno común.</span></div>
+        <div class="challenge-point"><span class="check-icon">✓</span><span><strong>Seguimiento estructurado</strong><br>Organiza proyectos, responsables, recursos y movimientos.</span></div>
+        <div class="challenge-point"><span class="check-icon">✓</span><span><strong>Decisiones con contexto</strong><br>Reúne reportes y alertas para facilitar el seguimiento.</span></div>
+      </div>
+      <a class="btn" style="background:#08253a;color:#fff" href="#modulos">Ver los módulos →</a>
+    </div>
+    <div class="challenge-quote reveal">
+      <span class="eyebrow">Lo que buscamos aportar</span>
+      <h3>Una propuesta tecnológica orientada a dar visibilidad a su operación.</h3>
+      <p>No prometemos ahorros porcentuales ni mejoras cuantificadas sin mediciones. Presentamos una plataforma en construcción progresiva, con capacidades parciales, en desarrollo y en hoja de ruta claramente identificadas.</p>
+      <ul>
+        <li>Información centralizada de proyectos y recursos.</li>
+        <li>Seguimiento de materiales con registro de movimientos.</li>
+        <li>Coordinación progresiva entre oficina y campo.</li>
+        <li>Arquitectura modular preparada para evolucionar.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 03 · MÓDULOS -->
+<section class="section modules" id="modulos">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Capacidades de la plataforma</span>
+      <h2>Cinco módulos. <span class="gradient-text">Estados transparentes.</span></h2>
+      <p>Cada capacidad se presenta con su estado real: lo que ya se puede demostrar, lo que está en construcción y lo que forma parte de la hoja de ruta. Sin promesas que no podamos respaldar.</p>
+    </div>
+    <div class="modules-grid" id="modulesGrid"></div>
+  </div>
+</section>
+
+<!-- 04 · DEMO -->
+<section class="section live-demo" id="demo-panel">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Centro de operaciones</span>
+      <h2>Una operación. <span class="gradient-text">Una sola vista.</span></h2>
+      <p>Explora este prototipo funcional del dashboard: cambia de módulo, consulta indicadores y prueba una salida de inventario. Los datos son ilustrativos y no representan métricas reales de Agro Solar DC S.A.S.</p>
+    </div>
+    <div class="demo-note reveal">Datos de ejemplo · Interfaz de demostración, no información productiva</div>
+    <div class="ops-shell reveal">
+      <aside class="ops-sidebar">
+        <div class="ops-brand"><span>⌁</span><div><b>ASC / OPERACIONES</b><small>ENTORNO DEMOSTRATIVO</small></div></div>
+        <button class="ops-nav active" data-view="overview">◈ <span>Resumen general</span></button>
+        <button class="ops-nav" data-view="projects">⌖ <span>Proyectos</span></button>
+        <button class="ops-nav" data-view="materials">⬡ <span>Materiales</span></button>
+        <button class="ops-nav" data-view="users">♙ <span>Usuarios y roles</span></button>
+        <button class="ops-nav" data-view="reports">▥ <span>Reportes y alertas</span></button>
+        <div class="ops-sidebar-foot"><span class="pulse-dot"></span> Vista interactiva local</div>
+      </aside>
+      <div class="ops-main">
+        <div class="ops-head"><div><span class="ops-kicker">PANEL DE CONTROL / <span id="opsSectionLabel">RESUMEN</span></span><h3 id="opsTitle">Panorama operativo</h3></div><span class="ops-badge">● DATOS DE EJEMPLO</span></div>
+        <div class="ops-kpis" id="opsKpis">
+          <div><small>Proyectos activos</small><strong>12</strong><span class="kpi-green">Seguimiento centralizado</span></div>
+          <div><small>Materiales registrados</small><strong id="stockKpi">248</strong><span>Movimientos trazables</span></div>
+          <div><small>Usuarios de ejemplo</small><strong>36</strong><span>Roles y permisos</span></div>
+          <div class="alert-kpi"><small>Alertas ilustrativas</small><strong id="alertKpi">03</strong><span>Requieren revisión</span></div>
+        </div>
+        <div id="opsContent" class="ops-content"></div>
+        <div class="ops-widget ops-map-widget"><div class="widget-head"><b>Frentes de trabajo</b><span>Mapa conceptual</span></div><div class="ops-map"><span class="map-road road-a"></span><span class="map-road road-b"></span><button class="map-pin pin-a" data-pin="Solar Norte" aria-label="Seleccionar Solar Norte">SN</button><button class="map-pin pin-b" data-pin="El Rosal" aria-label="Seleccionar El Rosal">ER</button><button class="map-pin pin-c" data-pin="La Esperanza" aria-label="Seleccionar La Esperanza">LE</button><div class="map-legend">⌖ Selecciona un marcador para explorar un proyecto</div></div></div>
+      </div>
+    </div>
+    <p class="ops-disclaimer">Prototipo de interfaz para presentación. Proyectos, cantidades, nombres, porcentajes y alertas son datos ficticios de demostración, no cifras reales de Agro Solar DC S.A.S.</p>
+  </div>
+</section>
+
+<!-- 05 · TRAZABILIDAD -->
+<section class="section trace" id="trazabilidad">
+  <div class="container trace-grid">
+    <div class="trace-intro reveal">
+      <span class="eyebrow">Trazabilidad del material</span>
+      <div class="section-heading"><h2>Del origen al destino, <span style="color:#0789a9">paso a paso.</span></h2><p>Recorre un ejemplo del ciclo de vida de un material. Cada etapa representa un punto de control que documenta movimientos, responsables y evidencias.</p></div>
+      <p style="font-size:.83rem">Selecciona una etapa para ver qué información se registraría en ese momento del proceso.</p>
+    </div>
+    <div class="workflow-wrap reveal">
+      <div class="workflow" id="workflow">
+        <div class="step"><button class="step-button active" data-step="0" aria-label="Ver etapa compra">▣</button><strong>Compra</strong><small>Origen y pedido</small></div>
+        <div class="step"><button class="step-button" data-step="1" aria-label="Ver etapa recepción">⬡</button><strong>Recepción</strong><small>Ingreso y revisión</small></div>
+        <div class="step"><button class="step-button" data-step="2" aria-label="Ver etapa despacho">▰</button><strong>Despacho</strong><small>Entrega a campo</small></div>
+        <div class="step"><button class="step-button" data-step="3" aria-label="Ver etapa consumo">♙</button><strong>Consumo</strong><small>Uso y evidencia</small></div>
+        <div class="step"><button class="step-button" data-step="4" aria-label="Ver etapa devolución">↺</button><strong>Devolución</strong><small>Revisión y cierre</small></div>
+        <div class="step-detail" id="stepDetail" aria-live="polite"><div class="step-detail-icon">▣</div><div><strong>Compra · registro de origen</strong><p>Ejemplo: proveedor, orden de compra, cantidad solicitada y documentación asociada al material.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 · PLATAFORMA (laptop) -->
+<section class="section platform" id="plataforma">
+  <div class="container platform-grid">
+    <div class="platform-copy reveal">
+      <span class="eyebrow">Explora la plataforma</span>
+      <div class="section-heading"><h2>Una visión completa de la <span class="gradient-text">operación.</span></h2><p>Explora las áreas que conforman Agro Solar Conectt v2.0 y descubre cómo se relacionan dentro de una misma plataforma.</p></div>
+      <div class="tab-list" role="tablist" aria-label="Módulos de demostración">
+        <button class="tab-btn active" role="tab" aria-selected="true" data-tab="projects">Proyectos</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="materials">Materiales</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="security">Usuarios y seguridad</button>
+        <button class="tab-btn" role="tab" aria-selected="false" data-tab="reports">Reportes</button>
+      </div>
+      <div class="tab-panel" id="tabPanel" role="tabpanel" aria-live="polite">
+        <h3>Proyectos organizados, de principio a seguimiento</h3>
+        <p>Centraliza actividades, responsables y estado de avance para facilitar el seguimiento del trabajo y mantener la información contextualizada.</p>
+      </div>
+    </div>
+    <div class="platform-visual reveal">
+      <div class="laptop">
+        <div class="laptop-screen">
+          <div class="laptop-title"><strong>◈ Agro Solar Conectt <span style="color:var(--green)">v2.0</span></strong><span style="color:var(--cyan)">PANEL OPERATIVO</span></div>
+          <div class="laptop-content">
+            <div class="laptop-card"><h4>PROYECTOS ACTIVOS</h4><strong id="laptopMetric">12</strong><p>Seguimiento de avance</p></div>
+            <div class="laptop-card"><h4>RECURSOS EN CAMPO</h4><strong id="laptopMetric2">248</strong><p>Control de materiales</p></div>
+            <div class="laptop-card laptop-wide"><div><h4>ACTIVIDAD Y AVANCE</h4><strong style="font-size:1.15rem">68%</strong><p>Ejemplo de visualización</p></div><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="laptop-base"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 07 · PROFUNDIZAR (tab valor / arquitectura) -->
+<section class="section profundizar" id="profundizar">
+  <div class="container">
+    <div class="section-heading reveal">
+      <span class="eyebrow">Para profundizar</span>
+      <h2>Lo que cambia para su operación. <span class="gradient-text">Cómo está construido.</span></h2>
+      <p>Elija la profundidad que necesita. La información es la misma, el nivel de detalle se adapta a su perfil.</p>
+    </div>
+    <div class="profile-tabs" role="tablist">
+      <button class="profile-tab active" data-profile="business" role="tab" aria-selected="true">Valor para su empresa</button>
+      <button class="profile-tab" data-profile="technical" role="tab" aria-selected="false">Arquitectura técnica</button>
+    </div>
+    <div id="profilePanel"></div>
+  </div>
+</section>
+
+<!-- 08 · CIERRE -->
+<section class="cta-band" id="contacto">
+  <div class="container cta-inner reveal">
+    <div><span class="eyebrow">El siguiente paso</span><h2>Conozcamos los retos<br><span class="gradient-text">de su operación.</span></h2><p>Conversemos sobre sus necesidades y exploremos el alcance actual de la plataforma, sus capacidades demostrables y sus posibilidades de evolución.</p></div>
+    <div class="cta-actions" id="ctaActions"><button class="btn btn-primary" data-open-demo>Solicitar una presentación ↗</button><a href="#inicio" class="btn btn-outline">Volver al inicio ↑</a></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="container footer-inner">
+  <a class="brand" href="#inicio"><span class="brand-mark">⌁</span><span>Agro Solar Conectt <small>v2.0</small></span></a>
+  <div class="footer-links"><a href="#solucion">El reto</a><a href="#modulos">Módulos</a><a href="#demo-panel">Demo</a><a href="#trazabilidad">Trazabilidad</a><a href="#profundizar">Profundizar</a></div>
+  <span class="footer-status"><span class="status-dot"></span> Desarrollo progresivo · Última actualización: <span id="updateDate"></span></span>
+</div></footer>
+
+<div class="modal-backdrop" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal">
+    <button class="modal-close" id="closeModal" aria-label="Cerrar ventana">×</button>
+    <span class="eyebrow">Hablemos del proyecto</span><h2 id="modalTitle">Solicita una presentación</h2>
+    <p>Déjanos los datos de contacto para preparar una conversación sobre las necesidades de tu operación.</p>
+    <form id="demoForm">
+      <div class="form-row"><label for="name">Nombre</label><input id="name" name="name" required placeholder="Tu nombre" autocomplete="name"></div>
+      <div class="form-row"><label for="email">Correo corporativo</label><input id="email" name="email" type="email" required placeholder="nombre@empresa.com" autocomplete="email"></div>
+      <div class="form-row"><label for="interest">¿Qué te interesa conocer?</label><select id="interest" name="interest"><option>Vista general de la plataforma</option><option>Trazabilidad de materiales</option><option>Gestión de proyectos</option><option>Usuarios, seguridad y reportes</option><option>Arquitectura técnica</option></select></div>
+      <div class="form-row"><label for="message">Mensaje (opcional)</label><textarea id="message" name="message" placeholder="Cuéntanos brevemente sobre tu operación"></textarea></div>
+      <button class="btn btn-primary" type="submit" style="width:100%">Preparar solicitud ↗</button>
+      <div class="form-note">Demo de interfaz: este formulario no envía datos a un servidor. Debe conectarse a un backend o servicio de correo para recibir solicitudes.</div>
+    </form>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   AGRO SOLAR CONECTT v2.0 — Interacciones de demostración
+   ========================================================= */
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+
+/* Fecha en footer */
+$('#updateDate').textContent = new Date().toLocaleDateString('es-CO', { month:'long', year:'numeric' });
+
+/* Menú móvil */
+const menuToggle = $('#menuToggle');
+const navLinks = $('#navLinks');
+menuToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.textContent = open ? '×' : '☰';
+});
+$$('#navLinks a').forEach(link => link.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  menuToggle.setAttribute('aria-expanded', 'false');
+  menuToggle.textContent = '☰';
+}));
+
+/* Contadores animados */
+const countObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = Number(el.dataset.count || 0);
+    const start = performance.now();
+    const duration = 1000;
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString('es-CO');
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+    countObserver.unobserve(el);
+  });
+}, { threshold: .5 });
+$$('[data-count]').forEach(el => countObserver.observe(el));
+
+/* Reveal on scroll */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: .12 });
+$$('.reveal').forEach(el => revealObserver.observe(el));
+
+/* =========================================================
+   MÓDULOS con badges de estado (unificados de los 4 docs)
+   ========================================================= */
+const MODULES = [
+  { key:'projects',  status:'partial', icon:'⌖', title:'Proyectos',              desc:'Organización de proyectos, actividades, responsables y avances.',                       extra:'Seguimiento de actividades, asignación de responsables y consulta del estado del proyecto. Módulo parcial: algunas operaciones se encuentran en pruebas.', color:'#9af36a' },
+  { key:'materials', status:'partial', icon:'⬡', title:'Materiales e inventario', desc:'Trazabilidad de inventario, entregas, movimientos y devoluciones.',                    extra:'Registro de entradas y salidas, origen y destino, revisión de devoluciones y evidencias. Módulo parcial: algunas operaciones se encuentran en pruebas.', color:'#42d8f2' },
+  { key:'users',     status:'partial', icon:'♙', title:'Usuarios y permisos',    desc:'Acceso organizado según roles y responsabilidades.',                                    extra:'Administración de usuarios, permisos y control de acceso según el perfil definido. Módulo parcial: controles sujetos a validación.', color:'#c5a3ff' },
+  { key:'reports',   status:'wip',     icon:'▥', title:'Reportes y alertas',     desc:'Información estructurada para facilitar el seguimiento operativo.',                    extra:'Módulo en desarrollo. El objetivo es ofrecer consultas, reportes y alertas configurables de acuerdo con los procesos implementados.', color:'#ffb65c' },
+  { key:'mobile',    status:'roadmap', icon:'▣', title:'Acceso móvil',           desc:'Una experiencia pensada para conectar oficina y campo.',                               extra:'Hoja de ruta. Línea de evolución prevista para ampliar la interacción con la plataforma en contextos de trabajo de campo.', color:'#35e4d0' }
+];
+const STATUS_LABEL = { partial:'Demostración parcial', wip:'En desarrollo', roadmap:'Hoja de ruta' };
+$('#modulesGrid').innerHTML = MODULES.map(m => `
+  <article class="module-card reveal" data-status="${m.status}" style="--accent:${m.color}">
+    <span class="module-badge ${m.status}">${STATUS_LABEL[m.status]}</span>
+    <div class="module-icon">${m.icon}</div>
+    <h3>${m.title}</h3>
+    <p>${m.desc}</p>
+    <button aria-expanded="false">Ver capacidades +</button>
+    <div class="module-extra">${m.extra}</div>
+  </article>
+`).join('');
+$$('.module-card button').forEach(btn => btn.addEventListener('click', () => {
+  const card = btn.closest('.module-card');
+  const expanded = card.classList.toggle('expanded');
+  btn.setAttribute('aria-expanded', String(expanded));
+  btn.textContent = expanded ? 'Ver menos −' : 'Ver capacidades +';
+}));
+/* Reobservar los nuevos .reveal */
+$$('.module-card.reveal').forEach(el => revealObserver.observe(el));
+
+/* =========================================================
+   TABS plataforma (laptop)
+   ========================================================= */
+const tabContent = {
+  projects:  { title:'Proyectos organizados, de principio a seguimiento', text:'Centraliza actividades, responsables y estado de avance para facilitar el seguimiento del trabajo.', metric:'12', metric2:'248' },
+  materials: { title:'Trazabilidad de materiales durante su ciclo de vida', text:'Relaciona entradas, salidas, entregas, consumos y devoluciones, con información de origen y destino.', metric:'08', metric2:'248' },
+  security:  { title:'Accesos alineados con cada responsabilidad',          text:'Una estructura de roles y permisos organiza quién puede consultar o administrar información.',       metric:'36', metric2:'05' },
+  reports:   { title:'Información estructurada para decidir mejor',         text:'Indicadores y alertas ilustrativas para apoyar el seguimiento de actividades y recursos.',            metric:'03', metric2:'12' }
+};
+$$('[data-tab]').forEach(btn => btn.addEventListener('click', () => {
+  $$('[data-tab]').forEach(t => { t.classList.toggle('active', t === btn); t.setAttribute('aria-selected', String(t === btn)); });
+  const d = tabContent[btn.dataset.tab];
+  $('#tabPanel').innerHTML = `<h3>${d.title}</h3><p>${d.text}</p>`;
+  $('#laptopMetric').textContent = d.metric;
+  $('#laptopMetric2').textContent = d.metric2;
+}));
+
+/* =========================================================
+   TRAZABILIDAD (5 etapas canónicas)
+   ========================================================= */
+const steps = [
+  { icon:'▣', title:'Compra · registro de origen',        text:'Proveedor, orden de compra, cantidad solicitada y documentación asociada al material.' },
+  { icon:'⬡', title:'Recepción · validar lo recibido',    text:'Cantidad recibida, estado del material, fecha de ingreso y persona responsable de la revisión.' },
+  { icon:'▰', title:'Despacho · asignación de destino',   text:'Salida de inventario, proyecto o frente de trabajo de destino, responsable y soporte de entrega.' },
+  { icon:'♙', title:'Consumo · registrar el uso',         text:'Material utilizado, tramo o actividad relacionada, cantidad consumida y evidencia de campo.' },
+  { icon:'↺', title:'Devolución · revisión y cierre',     text:'Cantidad devuelta, estado del material, aprobación de la revisión y decisión de reintegro o disposición.' }
+];
+$$('[data-step]').forEach(btn => btn.addEventListener('click', () => {
+  const s = steps[Number(btn.dataset.step)];
+  $$('.step-button').forEach(b => b.classList.toggle('active', b === btn));
+  $('#stepDetail').innerHTML = `<div class="step-detail-icon">${s.icon}</div><div><strong>${s.title}</strong><p>${s.text}</p></div>`;
+}));
+
+/* =========================================================
+   MODAL + TOAST
+   ========================================================= */
+const modal = $('#demoModal');
+const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow=''; };
+$$('[data-open-demo]').forEach(btn => btn.addEventListener('click', () => {
+  modal.classList.add('open'); document.body.style.overflow='hidden'; $('#name').focus();
+}));
+$('#closeModal').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+$('#demoForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const form = new FormData(e.currentTarget);
+  const name = String(form.get('name') || '').trim();
+  const email = String(form.get('email') || '').trim();
+  if (!name || !email) return;
+  closeModal();
+  const toast = $('#toast');
+  toast.textContent = `Gracias, ${name}. La interfaz validó los datos; este formulario de demostración no envía a un servidor.`;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 6500);
+  e.currentTarget.reset();
+});
+
+/* =========================================================
+   SELECTOR DE AUDIENCIA (Empresa / Ingeniería)
+   ========================================================= */
+const audienceCopy = {
+  business: {
+    description: 'Agro Solar Conectt v2.0 centraliza la información de proyectos, materiales y actividades de campo en un entorno digital modular, para dar a las empresas una visión más clara de su operación.',
+    ctaPrimary: 'Solicitar una presentación ↗',
+    ctaSecondary: 'Volver al inicio ↑'
+  },
+  technical: {
+    description: 'Plataforma modular: frontend React + TypeScript, API FastAPI, persistencia PostgreSQL, caché Redis y despliegue Docker. Arquitectura preparada para evolucionar por componentes.',
+    ctaPrimary: 'Explorar la demo técnica ↗',
+    ctaSecondary: 'Revisar arquitectura ↑'
+  }
+};
+function setAudience(mode){
+  const business = mode === 'business';
+  $('#audBusiness').classList.toggle('active', business);
+  $('#audTechnical').classList.toggle('active', !business);
+  $('#audBusiness').setAttribute('aria-pressed', String(business));
+  $('#audTechnical').setAttribute('aria-pressed', String(!business));
+  $('#heroDescription').textContent = audienceCopy[mode].description;
+  /* CTAs del cierre cambian según audiencia */
+  const cta = $('#ctaActions');
+  cta.innerHTML = `<button class="btn btn-primary" data-open-demo>${audienceCopy[mode].ctaPrimary}</button><a href="${business ? '#inicio' : '#profundizar'}" class="btn btn-outline">${audienceCopy[mode].ctaSecondary}</a>`;
+  cta.querySelector('[data-open-demo]').addEventListener('click', () => { modal.classList.add('open'); document.body.style.overflow='hidden'; $('#name').focus(); });
+  /* Si elige técnico, abrir automáticamente el tab de arquitectura */
+  if (!business) selectProfile('technical');
+}
+$('#audBusiness').addEventListener('click', () => setAudience('business'));
+$('#audTechnical').addEventListener('click', () => setAudience('technical'));
+
+/* =========================================================
+   TAB VALOR / ARQUITECTURA (fusión de secciones)
+   ========================================================= */
+const VALUE_HTML = `
+  <div class="value-grid">
+    <article class="value-card"><span class="value-num">01 / VISIBILIDAD</span><div class="value-icon">◉</div><h3>Decisiones con contexto</h3><p>Reúne el estado de proyectos, recursos y actividades para reducir la dependencia de reportes dispersos.</p></article>
+    <article class="value-card"><span class="value-num">02 / CONTROL</span><div class="value-icon amber">⬡</div><h3>Menos puntos ciegos en inventario</h3><p>Relaciona los movimientos con su responsable, destino y actividad para fortalecer la trazabilidad de materiales.</p></article>
+    <article class="value-card"><span class="value-num">03 / EVIDENCIA</span><div class="value-icon violet">▣</div><h3>Historial de la operación</h3><p>Organiza registros y evidencias para facilitar consultas, revisión de movimientos y seguimiento.</p></article>
+    <article class="value-card"><span class="value-num">04 / COORDINACIÓN</span><div class="value-icon green">⌘</div><h3>Equipos conectados</h3><p>Un entorno común para alinear responsables, permisos y procesos entre oficina y campo.</p></article>
+  </div>`;
+const ARCH_HTML = `
+  <div class="architecture-grid">
+    <div>
+      <p style="color:#a9c0cf;font-size:.9rem">La solución se plantea con componentes separados para facilitar el mantenimiento, la evolución de módulos y la integración entre interfaz, API y datos. Cada componente tiene su propio estado de avance.</p>
+      <p class="architecture-note">La arquitectura describe la base técnica del proyecto; el estado de cada función debe validarse contra la versión implementada antes de presentarla como disponible en producción.</p>
+    </div>
+    <div class="architecture-stack">
+      <div class="stack-item"><span class="stack-icon">▤</span><div><b>Frontend web</b><p>React · TypeScript · interfaz adaptable</p></div><span class="stack-tag partial">PARCIAL</span></div>
+      <div class="stack-item"><span class="stack-icon green">▣</span><div><b>Aplicación móvil</b><p>React Native · experiencia para campo</p></div><span class="stack-tag roadmap">HOJA DE RUTA</span></div>
+      <div class="stack-item"><span class="stack-icon amber">⌘</span><div><b>Backend y API</b><p>Python · FastAPI · SQLAlchemy</p></div><span class="stack-tag partial">PARCIAL</span></div>
+      <div class="stack-item"><span class="stack-icon violet">◈</span><div><b>Datos y caché</b><p>PostgreSQL · Redis</p></div><span class="stack-tag partial">PARCIAL</span></div>
+      <div class="stack-item"><span class="stack-icon">⬡</span><div><b>Despliegue y protección</b><p>Docker · control de acceso por roles · auditoría</p></div><span class="stack-tag wip">EN DESARROLLO</span></div>
+      <div class="stack-item"><span class="stack-icon amber">▥</span><div><b>Reportes y alertas</b><p>Consultas y alertas configurables</p></div><span class="stack-tag wip">EN DESARROLLO</span></div>
+    </div>
+  </div>`;
+function selectProfile(profile){
+  $$('.profile-tab').forEach(t => {
+    const on = t.dataset.profile === profile;
+    t.classList.toggle('active', on);
+    t.setAttribute('aria-selected', String(on));
+  });
+  $('#profilePanel').innerHTML = profile === 'business' ? VALUE_HTML : ARCH_HTML;
+}
+$$('.profile-tab').forEach(btn => btn.addEventListener('click', () => selectProfile(btn.dataset.profile)));
+selectProfile('business');
+
+/* =========================================================
+   DASHBOARD INTERACTIVO (datos de ejemplo, solo locales)
+   ========================================================= */
+const opsViews = {
+  overview: { label:'RESUMEN',   title:'Panorama operativo' },
+  projects: { label:'PROYECTOS', title:'Proyectos en seguimiento' },
+  materials:{ label:'MATERIALES',title:'Inventario y movimientos' },
+  users:    { label:'USUARIOS',  title:'Roles y permisos' },
+  reports:  { label:'REPORTES',  title:'Reportes y alertas' }
+};
+const demoProjects = [
+  { name:'Solar Norte',  type:'Ingeniería · Ejecución', progress:68, owner:'Ing. Campo',         status:'En ejecución' },
+  { name:'El Rosal',     type:'Instalación · Ejecución', progress:45, owner:'Coordinación Sur',  status:'En ejecución' },
+  { name:'La Esperanza', type:'Validación · Revisión',   progress:32, owner:'Coordinación Norte',status:'En revisión' }
+];
+const demoMaterials = [
+  { name:'Cable solar',       unit:'m',   stock:500, min:150, out:50 },
+  { name:'Paneles 550 W',     unit:'und', stock:60,  min:20,  out:5  },
+  { name:'Conectores MC4',    unit:'und', stock:38,  min:40,  out:10 },
+  { name:'Soportes de montaje',unit:'und',stock:120, min:30,  out:10 }
+];
+let selectedOpsView = 'overview';
+const movementLog = [];
+
+function renderOpsView(view){
+  selectedOpsView = view;
+  $$('.ops-nav').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  $('#opsSectionLabel').textContent = opsViews[view].label;
+  $('#opsTitle').textContent = opsViews[view].title;
+  const content = $('#opsContent');
+  if (view === 'overview'){
+    content.innerHTML = `
+      <div class="ops-widget"><div class="widget-head"><b>Proyectos en seguimiento</b><span>Resumen</span></div>
+        ${demoProjects.map(p => `<div class="project-row"><div class="project-symbol">${p.name.split(' ').map(w=>w[0]).join('')}</div><div class="project-meta"><b>${p.name}</b><small>${p.type}</small><div class="ops-progress"><i style="width:${p.progress}%"></i></div></div><strong>${p.progress}%</strong></div>`).join('')}
+      </div>
+      <div class="ops-widget"><div class="widget-head"><b>Actividad operativa</b><span>Datos ilustrativos</span></div>
+        <div class="ops-chart"><div style="height:42%"></div><div style="height:64%"></div><div style="height:50%"></div><div style="height:78%"></div><div style="height:60%"></div><div style="height:92%"></div><div style="height:72%"></div><div style="height:84%"></div></div>
+        <div class="chart-labels"><span>Periodo 1</span><span>Periodo 8</span></div>
+        <p class="ops-footnote">Gráfica conceptual, no son métricas reales.</p>
+      </div>`;
+  } else if (view === 'projects'){
+    content.innerHTML = `<div class="ops-widget ops-materials"><div class="widget-head"><b>Portafolio de proyectos</b><span>3 registros de ejemplo</span></div>
+      <table class="ops-table"><thead><tr><th>Proyecto</th><th>Responsable</th><th>Avance</th><th>Estado</th></tr></thead>
+      <tbody>${demoProjects.map(p => `<tr><td>${p.name}</td><td>${p.owner}</td><td>${p.progress}%</td><td><span class="ops-status">${p.status}</span></td></tr>`).join('')}</tbody></table>
+      <p class="ops-footnote">Selecciona la sección Materiales para probar un movimiento de inventario.</p></div>`;
+  } else if (view === 'materials'){
+    content.innerHTML = `<div class="ops-widget ops-materials"><div class="widget-head"><b>Inventario de demostración</b><span>Prueba una salida</span></div>
+      <table class="ops-table"><thead><tr><th>Material</th><th>Stock</th><th>Mínimo</th><th>Acción</th></tr></thead>
+      <tbody>${demoMaterials.map((m,i) => `<tr><td>${m.name}</td><td>${m.stock} ${m.unit}</td><td>${m.min} ${m.unit}</td><td><button class="ops-action" data-stock-out="${i}" ${m.stock < m.out ? 'disabled' : ''}>Registrar −${m.out}</button></td></tr>`).join('')}</tbody></table>
+      <div class="ops-widget" style="margin-top:12px"><div class="widget-head"><b>Movimientos recientes</b><span>${movementLog.length} en esta sesión</span></div>
+      ${movementLog.length ? `<table class="ops-table"><tbody>${movementLog.slice(-4).reverse().map(m => `<tr><td>${m.time}</td><td>${m.name}</td><td>−${m.amount} ${m.unit}</td><td><span class="ops-status">Registrado en demo</span></td></tr>`).join('')}</tbody></table>` : '<p class="ops-empty">Aún no hay movimientos en esta sesión. Usa “Registrar” en un material para ver cómo se actualiza el stock y el historial local.</p>'}</div></div>`;
+  } else if (view === 'users'){
+    content.innerHTML = `<div class="ops-widget ops-materials"><div class="widget-head"><b>Permisos por perfil</b><span>Matriz ilustrativa</span></div>
+      <table class="ops-table"><thead><tr><th>Perfil</th><th>Proyectos</th><th>Materiales</th><th>Usuarios</th><th>Reportes</th></tr></thead>
+      <tbody>
+        <tr><td>Gerencia</td><td>Ver / editar</td><td>Ver / editar</td><td>Administrar</td><td>Consultar</td></tr>
+        <tr><td>Coordinación</td><td>Ver / editar</td><td>Ver / editar</td><td>Consultar</td><td>Consultar</td></tr>
+        <tr><td>Asesoría</td><td>Consultar</td><td>Consultar</td><td>Sin acceso</td><td>Consultar</td></tr>
+        <tr><td>Técnico</td><td>Asignados</td><td>Movimientos</td><td>Sin acceso</td><td>Sin acceso</td></tr>
+      </tbody></table>
+      <p class="ops-footnote">Los perfiles y permisos son ejemplos; la configuración real depende de la implementación.</p></div>`;
+  } else {
+    content.innerHTML = `<div class="ops-widget ops-materials"><div class="widget-head"><b>Centro de reportes</b><span>Acciones de interfaz</span></div>
+      <div class="project-row"><div class="project-symbol">PDF</div><div class="project-meta"><b>Resumen de inventario</b><small>Existencias y materiales bajo mínimo</small></div><button class="ops-action" data-report="inventario">Preparar resumen</button></div>
+      <div class="project-row"><div class="project-symbol orange">!</div><div class="project-meta"><b>Alertas de stock</b><small>Revisión de niveles mínimos de ejemplo</small></div><button class="ops-action" data-report="alertas">Ver alertas</button></div>
+      <div class="project-row"><div class="project-symbol violet">↗</div><div class="project-meta"><b>Actividad de proyectos</b><small>Vista de avance del portafolio</small></div><button class="ops-action" data-report="proyectos">Ver resumen</button></div>
+      <p id="reportFeedback" class="ops-footnote">Estas acciones preparan resúmenes locales de demostración; no generan informes reales.</p></div>`;
+  }
+}
+$$('.ops-nav').forEach(btn => btn.addEventListener('click', () => renderOpsView(btn.dataset.view)));
+
+$('#opsContent').addEventListener('click', e => {
+  const stockBtn = e.target.closest('[data-stock-out]');
+  if (stockBtn){
+    const i = Number(stockBtn.dataset.stockOut);
+    const item = demoMaterials[i];
+    if (item.stock < item.out) return;
+    item.stock -= item.out;
+    movementLog.push({ name: item.name, amount: item.out, unit: item.unit, time: new Date().toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'}) });
+    $('#stockKpi').textContent = demoMaterials.reduce((s,m) => s + m.stock, 0).toLocaleString('es-CO');
+    renderOpsView('materials');
+    return;
+  }
+  const reportBtn = e.target.closest('[data-report]');
+  if (reportBtn){
+    const labels = {
+      inventario:'Resumen de inventario preparado en la interfaz.',
+      alertas:`Se detectaron ${demoMaterials.filter(m => m.stock < m.min).length} materiales bajo el mínimo ilustrativo.`,
+      proyectos:`Portafolio de demostración: ${demoProjects.length} proyectos listados.`
+    };
+    const fb = $('#reportFeedback');
+    if (fb) fb.textContent = labels[reportBtn.dataset.report] || 'Acción de demostración completada.';
+  }
+});
+$$('[data-pin]').forEach(btn => btn.addEventListener('click', () => {
+  $$('.map-pin').forEach(pin => pin.classList.toggle('selected', pin === btn));
+  const project = demoProjects.find(p => p.name === btn.dataset.pin);
+  $('#opsTitle').textContent = project ? `${project.name} · ${project.progress}% de avance (demo)` : 'Proyecto seleccionado';
+  $('#opsSectionLabel').textContent = 'MAPA / PROYECTO';
+}));
+renderOpsView('overview');
+</script>
+</body>
+</html>
