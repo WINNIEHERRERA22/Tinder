@@ -1,0 +1,178 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #f2f2f5;
+  font-family: system-ui, sans-serif;
+}
+
+/* El "celular" */
+/* Carcasa con forma de huevo */
+.device {
+  position: relative;
+  width: 400px;
+  height: 760px;
+  /* más espacio arriba y a los lados para que la pantalla quepa en la parte angosta */
+  padding:120px 34px 96px;
+  background: linear-gradient(160deg, #f7a8d8, #d85fb0 55%, #b8409a);
+  border-radius: 50% 50% 50% 50% / 36% 36% 64% 64%;
+  box-shadow:
+    inset 0 -10px 24px rgba(0,0,0,.18),
+    inset 0 8px 18px rgba(255,255,255,.35),
+    0 24px 50px rgba(160,40,120,.35);
+}
+
+/* Cámara */
+.camera {
+  position: absolute;
+  top: 22px; left: 50%;
+  width: 22px; height: 22px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #556, #111);
+  border: 3px solid #e8a0d0;
+}
+
+/* La pantalla (antes era el "celular") */
+main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  /* arriba muy redondeada (sigue la curva del huevo), abajo casi recta */
+  border-radius: 80px 80px 110px 110px / 70px 70px 90px 90px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 4px solid #1a1a1f;
+}
+
+.camera { top: 48px; }       /* la cámara baja un poco para quedar dentro del rosado */
+.top    { padding-top: 16px; } /* el logo no queda pegado a la curva */
+/* Header con logo */
+.top {
+  text-align: center;
+  padding: 10px 0 4px;
+  color: #ff4b6e;
+  font-size: 18px;
+}
+
+/* Datos extra de la tarjeta */
+article .info {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 40px 14px 12px;
+  color: #fff;
+  background: linear-gradient(transparent, rgba(0,0,0,.85) 40%);
+}
+article .info h2 { position: static; padding: 0; background: none; font-size: 24px; }
+article .info p { font-size: 12px; margin-top: 4px; }
+.verified {
+  display: inline-grid; place-items: center;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #2f9bff;
+  font-size: 10px; font-style: normal;
+}
+
+/* Botones de colores como en la foto */
+footer { background: #14141a; }
+footer button { color: #fff; font-size: 20px; width: 46px; height: 46px; }
+.undo   { background: #7a6a9a !important; }
+.remove { background: #ff4b6e !important; }
+.star   { background: #2f7bff !important; }
+.fav    { background: #2ecc71 !important; }
+.zap    { background: #9b6bff !important; }
+
+/* Botón del corazón de la carcasa */
+.home {
+  position: absolute;
+  bottom: 26px; left: 50%;
+  width: 62px; height: 62px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 5px solid #f4c2e4;
+  background: #fff;
+  color: #ff4b8e;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+}
+
+/* Contenedor de tarjetas */
+.cards {
+  position: relative;
+  flex: 1;
+  margin: 16px 16px 0;
+}
+
+/* Tarjetas apiladas una sobre otra */
+article {
+    background: #ddd;
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  transition: transform .3s ease;
+}
+
+
+article img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+article h2 {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 48px 16px 16px;
+  color: #fff;
+  font-size: 26px;
+  background: linear-gradient(transparent, rgba(0,0,0,.7));
+}
+
+article h2 span { font-size: 20px; font-weight: 400; margin-left: 6px; }
+
+/* Indicadores LIKE / NOPE (invisibles al inicio) */
+.choice {
+  position: absolute;
+  top: 24px;
+  padding: 4px 12px;
+  border: 4px solid;
+  border-radius: 8px;
+  font-size: 28px;
+  font-weight: 800;
+  opacity: 0;
+}
+.choice.nope { right: 20px; color: #ff4b5c; transform: rotate(15deg); }
+.choice.like { left: 20px;  color: #2ecc71; transform: rotate(-15deg); }
+
+
+/* Footer */
+footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 14px 34px 30px;
+  gap: 4px;
+}
+footer button {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: #f2f2f5;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+
+article.go-left  { transform: translateX(-150%) rotate(-30deg) !important; }
+article.go-right { transform: translateX(150%)  rotate(30deg)  !important; }
+article.reset    { transition: transform .3s ease; }
