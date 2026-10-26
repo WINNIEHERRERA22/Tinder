@@ -13,9 +13,10 @@ body {
 .device {
   position: relative;
   width: 400px;
-  height: 760px;
+  height: 820px;
   /* más espacio arriba y a los lados para que la pantalla quepa en la parte angosta */
   padding:120px 34px 96px;
+  padding-bottom: 84px;
   background: linear-gradient(160deg, #f7a8d8, #d85fb0 55%, #b8409a);
   border-radius: 50% 50% 50% 50% / 36% 36% 64% 64%;
   box-shadow:
@@ -40,9 +41,9 @@ main {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: #14141a; 
   /* arriba muy redondeada (sigue la curva del huevo), abajo casi recta */
-  border-radius: 80px 80px 110px 110px / 70px 70px 90px 90px;
+  border-radius: 90px 90px 50% 50% / 70px 70px 28% 28%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -57,6 +58,8 @@ main {
   padding: 10px 0 4px;
   color: #ff4b6e;
   font-size: 18px;
+  background: #fff;
+  padding-bottom: 8px;
 }
 
 /* Datos extra de la tarjeta */
@@ -89,7 +92,7 @@ footer button { color: #fff; font-size: 20px; width: 46px; height: 46px; }
 /* Botón del corazón de la carcasa */
 .home {
   position: absolute;
-  bottom: 26px; left: 50%;
+  bottom: 14px; left: 50%;
   width: 62px; height: 62px;
   transform: translateX(-50%);
   border-radius: 50%;
@@ -105,7 +108,7 @@ footer button { color: #fff; font-size: 20px; width: 46px; height: 46px; }
 .cards {
   position: relative;
   flex: 1;
-  margin: 16px 16px 0;
+  margin: 0 12px 6px; 
 }
 
 /* Tarjetas apiladas una sobre otra */
@@ -154,17 +157,45 @@ article h2 span { font-size: 20px; font-weight: 400; margin-left: 6px; }
 .choice.nope { right: 20px; color: #ff4b5c; transform: rotate(15deg); }
 .choice.like { left: 20px;  color: #2ecc71; transform: rotate(-15deg); }
 
+.toast {
+  position: absolute;
+  top: 56px; left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  font-size: 13px;
+  opacity: 0;
+  transition: opacity .25s;
+  pointer-events: none;
+  z-index: 20;
+}
+.toast.show { opacity: 1; }
+
+.device.boost {
+  animation: boost-glow 1.2s ease-in-out infinite alternate;
+}
+@keyframes boost-glow {
+  from { box-shadow: 0 0 20px 4px rgba(155,107,255,.5), 0 24px 50px rgba(160,40,120,.35); }
+  to   { box-shadow: 0 0 50px 18px rgba(155,107,255,.9), 0 24px 50px rgba(160,40,120,.35); }
+}
+
 
 /* Footer */
 footer {
+  margin-top: -10px;
+  position: relative;
+  z-index: 5;
   display: flex;
-  justify-content: space-around;
-  padding: 14px 34px 30px;
-  gap: 4px;
+  justify-content: center;
+  padding: 10px 24px 62px;
+  gap: 8px;
+  background: transparent;
 }
 footer button {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border: none;
   border-radius: 50%;
   background: #f2f2f5;

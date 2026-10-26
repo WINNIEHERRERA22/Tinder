@@ -5,6 +5,7 @@ const cards = document.querySelector('.cards');
 let actualCard = null; // la tarjeta que se está arrastrando
 let startX = 0;        // dónde empezó el arrastre
 let pullDeltaX = 0;    // distancia recorrida
+const removed = [];
 
 cards.addEventListener('pointerdown', (e) => {
   const card = e.target.closest('article');
@@ -52,6 +53,8 @@ function release() {
 }
 
 function dismiss(card, direction) {
+  card._dir = direction;
+  removed.push(card);            
   card.style.transform = '';
   card.classList.add(direction);
   card.addEventListener('transitionend', () => card.remove(), { once: true });
@@ -67,15 +70,51 @@ function swipeTop(direction) {
   card.querySelector(direction === 'go-right' ? '.like' : '.nope').style.opacity = 1;
   setTimeout(() => dismiss(card, direction), 150);
 }
-function swipeTop(direction) {
-  const card = cards.querySelector('article:last-child');
+
+
+function undo() {
+  // si una tarjeta todavía se está yendo, esperamos a que termine
+  if (cards.querySelector('.go-left, .go-right')) return;
+
+  const card = removed.pop();
   if (!card) return;
-  card.querySelector(direction === 'go-right' ? '.like' : '.nope').style.opacity = 1;
-  setTimeout(() => dismiss(card, direction), 150);
+
+  // la dejamos limpia, como nueva
+  card.classList.remove('go-left', 'go-right', 'reset');
+  card.querySelectorAll('.choice').forEach((c) => (c.style.opacity = 0));
+
+  // la ponemos fuera de pantalla, del lado por donde salió, sin animación
+  const side = card._dir === 'go-right' ? 150 : -150;
+  card.style.transition = 'none';
+  card.style.transform = `translateX(${side}%) rotate(${side / 5}deg)`;
+  cards.appendChild(card);       // al ser la última del DOM, queda arriba
+
+  card.offsetWidth;              // fuerza al navegador a registrar la posición
+  card.style.transition = '';    // reactiva la animación del CSS
+  card.style.transform = '';     // vuelve al centro
 }
 
-document.querySelector('.undo').addEventListener('click',   () => console.log('undo'));
+let boostTimer = null;
+function boost() {
+  const device = document.querySelector('.device');
+  if (device.classList.contains('boost')) return; // ya está activo
+  device.classList.add('boost');
+  showToast('⚡ Boost activado');
+  boostTimer = setTimeout(() => {
+    device.classList.remove('boost');
+    showToast('Boost terminado');
+  }, 6000);
+}
+
+function showToast(text) {
+  const toast = document.querySelector('.toast');
+  toast.textContent = text;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1500);
+}
+
+document.querySelector('.undo').addEventListener('click',   () => { console.log('undo'); undo(); });
 document.querySelector('.remove').addEventListener('click', () => { console.log('remove');      swipeTop('go-left'); });
-document.querySelector('.star').addEventListener('click',   () => { console.log('super match'); swipeTop('go-right'); });
+document.querySelector('.star').addEventListener('click',   () => { console.log('super match'); showToast('⭐ Super match'); swipeTop('go-right'); });
 document.querySelector('.fav').addEventListener('click',    () => { console.log('match');       swipeTop('go-right'); });
-document.querySelector('.zap').addEventListener('click',    () => console.log('boost'));
+document.querySelector('.zap').addEventListener('click',    () => { console.log('boost');       boost(); });
